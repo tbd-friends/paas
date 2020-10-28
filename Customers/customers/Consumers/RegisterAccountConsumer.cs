@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using commands;
 using customers.Infrastructure;
 using customers.Infrastructure.Models;
+using events;
 using MassTransit;
 
 namespace customers.Consumers
@@ -20,12 +21,22 @@ namespace customers.Consumers
         {
             Console.WriteLine($"{context.Message.FirstName} {context.Message.Surname} ({context.Message.Email})");
 
-            await _repository.Add(new Customer
+            var customer = new Customer
             {
                 FirstName = context.Message.FirstName,
                 Surname = context.Message.Surname,
                 Email = context.Message.Email
-            }, "customers");
+            };
+
+            await _repository.Add(customer, "customers");
+
+            await context.Publish(new AccountRegistered
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                Surname = customer.Surname,
+                Email = customer.Email
+            });
         }
     }
 }

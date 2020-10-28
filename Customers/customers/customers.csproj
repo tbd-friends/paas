@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Commands\commands\commands.csproj" />
+    <ProjectReference Include="..\..\Shared\events\events.csproj" />
   </ItemGroup>
 
 </Project>

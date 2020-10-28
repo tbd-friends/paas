@@ -1,12 +1,9 @@
 ﻿using System;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
-namespace customers.Infrastructure.Models
+namespace events
 {
-    public class Customer
+    public class AccountRegistered
     {
-        [BsonId]
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
