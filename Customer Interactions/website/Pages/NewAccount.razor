@@ -1,0 +1,30 @@
+﻿@page "/new-account"
+
+<h3>Register</h3>
+
+<EditForm Model="Model">
+    <div class="form-group">
+        <InputText class="form-control" @bind-Value="Model.FirstName" placeholder="First Name" />
+    </div>
+    <div class="form-group">
+        <InputText class="form-control" @bind-Value="Model.Surname" placeholder="Surname" />
+    </div>
+    <div class="form-group">
+        <InputText class="form-control" @bind-Value="Model.Email" placeholder="Email" />
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary">Submit</button>
+    </div>
+</EditForm>
+
+@code {
+
+    public CustomerModel Model { get; set; } = new CustomerModel();
+
+    public class CustomerModel
+    {
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+    }
+}
