@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Gamer.Commands</AssemblyName>
+    <RootNamespace>Gamer.Commands</RootNamespace>
   </PropertyGroup>
 
 </Project>

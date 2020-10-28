@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using commands;
-using customers.Infrastructure;
-using customers.Infrastructure.Models;
-using events;
+using Gamer.Commands;
+using Gamer.Customer.Customers.Infrastructure;
+using Gamer.Events;
 using MassTransit;
 
-namespace customers.Consumers
+namespace Gamer.Customer.Customers.Consumers
 {
     public class RegisterAccountConsumer : IConsumer<RegisterAccount>
     {
@@ -21,7 +20,7 @@ namespace customers.Consumers
         {
             Console.WriteLine($"{context.Message.FirstName} {context.Message.Surname} ({context.Message.Email})");
 
-            var customer = new Customer
+            var customer = new Infrastructure.Models.Customer
             {
                 FirstName = context.Message.FirstName,
                 Surname = context.Message.Surname,

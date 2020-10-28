@@ -1,4 +1,4 @@
-﻿namespace commands
+﻿namespace Gamer.Commands
 {
     public class RegisterAccount
     {

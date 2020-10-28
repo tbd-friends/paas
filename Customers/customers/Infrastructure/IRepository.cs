@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace customers.Infrastructure
+namespace Gamer.Customer.Customers.Infrastructure
 {
     public interface IRepository
     {

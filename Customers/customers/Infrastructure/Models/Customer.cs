@@ -1,8 +1,7 @@
 ﻿using System;
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace customers.Infrastructure.Models
+namespace Gamer.Customer.Customers.Infrastructure.Models
 {
     public class Customer
     {

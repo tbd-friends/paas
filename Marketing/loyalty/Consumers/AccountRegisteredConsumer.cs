@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using events;
+using Gamer.Events;
 using MassTransit;
 
-namespace loyalty.Consumers
+namespace Gamer.Marketing.Loyalty.Consumers
 {
     public class AccountRegisteredConsumer : IConsumer<AccountRegistered>
     {

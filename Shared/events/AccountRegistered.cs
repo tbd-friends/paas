@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace events
+namespace Gamer.Events
 {
     public class AccountRegistered
     {

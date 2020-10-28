@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MongoDB.Driver;
 
-namespace customers.Infrastructure
+namespace Gamer.Customer.Customers.Infrastructure
 {
     public class MongoRepository : IRepository
     {

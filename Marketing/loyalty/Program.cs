@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using loyalty.Consumers;
+using Gamer.Marketing.Loyalty.Consumers;
 using MassTransit;
 
-namespace loyalty
+namespace Gamer.Marketing.Loyalty
 {
     class Program
     {

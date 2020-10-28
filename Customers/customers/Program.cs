@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using customers.Consumers;
-using customers.Consumers.Definitions;
-using customers.Infrastructure;
+using Gamer.Customer.Customers.Consumers;
+using Gamer.Customer.Customers.Consumers.Definitions;
+using Gamer.Customer.Customers.Infrastructure;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 
-namespace customers
+namespace Gamer.Customer.Customers
 {
     class Program
     {

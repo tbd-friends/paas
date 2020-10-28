@@ -1,8 +1,6 @@
-﻿using MassTransit;
-using MassTransit.ConsumeConfigurators;
-using MassTransit.Definition;
+﻿using MassTransit.Definition;
 
-namespace customers.Consumers.Definitions
+namespace Gamer.Customer.Customers.Consumers.Definitions
 {
     public class RegisterAccountConsumerDefinition : ConsumerDefinition<RegisterAccountConsumer>
     {
