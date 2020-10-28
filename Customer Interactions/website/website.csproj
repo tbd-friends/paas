@@ -10,4 +10,13 @@
     <Folder Include="Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.0.6" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Commands\commands\commands.csproj" />
+  </ItemGroup>
+
 </Project>

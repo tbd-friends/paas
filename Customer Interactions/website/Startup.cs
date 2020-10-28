@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,13 @@ namespace Gamer.Customer.Website
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq();
+            });
+
+            services.AddMassTransitHostedService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

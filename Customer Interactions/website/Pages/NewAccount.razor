@@ -1,16 +1,18 @@
 ﻿@page "/new-account"
+@using MassTransit
+@using commands
 
 <h3>Register</h3>
 
-<EditForm Model="Model">
+<EditForm Model="Model" OnValidSubmit="RegisterAccount">
     <div class="form-group">
-        <InputText class="form-control" @bind-Value="Model.FirstName" placeholder="First Name" />
+        <InputText class="form-control" @bind-Value="Model.FirstName" placeholder="First Name" autocomplete="__away" />
     </div>
     <div class="form-group">
-        <InputText class="form-control" @bind-Value="Model.Surname" placeholder="Surname" />
+        <InputText class="form-control" @bind-Value="Model.Surname" placeholder="Surname" autocomplete="__away" />
     </div>
     <div class="form-group">
-        <InputText class="form-control" @bind-Value="Model.Email" placeholder="Email" />
+        <InputText class="form-control" @bind-Value="Model.Email" placeholder="Email" autocomplete="__away" />
     </div>
     <div class="form-group">
         <button class="btn btn-primary">Submit</button>
@@ -19,6 +21,9 @@
 
 @code {
 
+    [Inject]
+    public ISendEndpointProvider EndpointProvider { get; set; }
+
     public CustomerModel Model { get; set; } = new CustomerModel();
 
     public class CustomerModel
@@ -26,5 +31,17 @@
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+    }
+
+    public async Task RegisterAccount()
+    {
+        var endpoint = await EndpointProvider.GetSendEndpoint(new Uri("queue:register-account"));
+
+        await endpoint.Send<RegisterAccount>(new RegisterAccount
+        {
+            FirstName = Model.FirstName,
+            Surname = Model.Surname,
+            Email = Model.Email
+        });
     }
 }
