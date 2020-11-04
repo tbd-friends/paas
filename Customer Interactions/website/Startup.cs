@@ -1,9 +1,12 @@
+using Gamer.Customer.Website.Consumers;
+using Gamer.Customer.Website.Infrastructure;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Driver;
 
 namespace Gamer.Customer.Website
 {
@@ -23,9 +26,21 @@ namespace Gamer.Customer.Website
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
+            services.AddSingleton<IMongoClient>(provider =>
+                new MongoClient(Configuration.GetConnectionString("mongo-db")));
+            services.AddScoped<IRepository, MongoRepository>();
+
             services.AddMassTransit(x =>
             {
-                x.UsingRabbitMq();
+                x.AddConsumer<AccountRegisteredConsumer>();
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.ReceiveEndpoint("website-account-registered", e =>
+                    {
+                        e.ConfigureConsumer<AccountRegisteredConsumer>(context);
+                    });
+                });
             });
 
             services.AddMassTransitHostedService();
