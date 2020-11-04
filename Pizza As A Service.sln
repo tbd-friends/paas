@@ -27,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".readme", ".readme", "{59B6
 		readme.md = readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Menu", "Menu", "{7F0568E5-FF78-4BEA-AFDA-D895A6B18C2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "menu-website", "Menu\menu-website\menu-website.csproj", "{6ABC9A0A-A822-432B-8D5B-C78BA12439F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,10 @@ Global
 		{3809DB1D-267B-491D-A182-8321B5287484}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3809DB1D-267B-491D-A182-8321B5287484}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3809DB1D-267B-491D-A182-8321B5287484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ABC9A0A-A822-432B-8D5B-C78BA12439F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ABC9A0A-A822-432B-8D5B-C78BA12439F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ABC9A0A-A822-432B-8D5B-C78BA12439F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABC9A0A-A822-432B-8D5B-C78BA12439F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +71,7 @@ Global
 		{B10EC9BD-7F35-40F1-BABA-2B0D52669966} = {A31F0262-485D-4F58-B9EF-018045FB8EEE}
 		{0D3B82D1-4306-40EA-A984-0B71DD0D0089} = {6FF81998-FF96-4F19-B233-76FE2F58A59B}
 		{3809DB1D-267B-491D-A182-8321B5287484} = {E3E514BE-085B-4336-92C5-6BEB71C212C9}
+		{6ABC9A0A-A822-432B-8D5B-C78BA12439F6} = {7F0568E5-FF78-4BEA-AFDA-D895A6B18C2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F55F4AC-3E96-456C-B665-76F6405F3448}

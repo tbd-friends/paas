@@ -1,0 +1,83 @@
+﻿@page "/menus"
+@using Confluent.Kafka
+@using Gamer.Menu.Website.Serializers
+
+<h3>Menus</h3>
+
+<EditForm Model="Model" OnValidSubmit="CreateMenu">
+    <!-- Name -->
+    <InputText @bind-Value="Model.Name" placeholder="Menu Name" />
+    <!-- Add Categories -->
+    <button class="btn btn-primary">Save</button>
+</EditForm>
+
+<!-- Add Items -->
+
+@code {
+
+    public Menu Model { get; set; } = new Menu();
+
+    // Name  (All-Day, Childrens, Seniors)
+    // Categories +
+    //  Items +
+
+    public class Menu
+    {
+        public string Name { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
+    }
+
+    public class Category
+    {
+        public string Name { get; set; }
+        public IEnumerable<Item> Items { get; set; }
+    }
+
+    public class Item
+    {
+        public string Name { get; set; }
+        public double Price { get; set; }
+    }
+
+    public async Task CreateMenu()
+    {
+        var configuration = new Dictionary<string, string>()
+{
+            {"bootstrap.servers", "localhost:9092"}
+        };
+
+        using var producer = new ProducerBuilder<Guid, Menu>(configuration)
+            .SetKeySerializer(new GuidKeySerializer())
+            .SetValueSerializer(new JsonValueSerializer<Menu>()).Build();
+
+        await producer.ProduceAsync("menus", new Message<Guid, Menu>()
+        {
+            Key = Guid.NewGuid(),
+            Value = new Menu
+            {
+                Name = Model.Name,
+                Categories = new[]
+                {
+                    new Category()
+                    {
+                        Name = "Appetizers", Items = new[]
+                        {
+                            new Item() {Name = "Mozzarella Sticks", Price = 9.99},
+                            new Item() {Name = "Garlic Bread", Price = 6.99},
+                            new Item() {Name = "Wings", Price = 12.99},
+                        }
+                    },
+                    new Category()
+                    {
+                        Name = "Pizzas", Items = new[]
+                        {
+                            new Item() {Name = "Cheese", Price = 9.99},
+                            new Item() {Name = "Pepperoni", Price = 10.99},
+                            new Item() {Name = "Ham & Pineapple", Price = 19.99},
+                        }
+                    },
+                }
+            }
+        });
+    }
+}
