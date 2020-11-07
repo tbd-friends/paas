@@ -1,3 +1,9 @@
+### The Idea
+
+A continuing effort to demonstrate and create discussion points for distributed systems, microservices and all those fun buzzwords. 
+
+![The Idea](/docs/PizzaEmporium_11032020.svg "The Diagram")
+
 ### Pre-Requisites
 
 - Docker
