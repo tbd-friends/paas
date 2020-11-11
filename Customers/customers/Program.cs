@@ -7,6 +7,7 @@ using Gamer.Customer.Customers.Infrastructure;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using mongo.repository;
 using MongoDB.Driver;
 
 namespace Gamer.Customer.Customers
@@ -23,7 +24,8 @@ namespace Gamer.Customer.Customers
 
             services.AddSingleton<IMongoClient>(provider =>
                 new MongoClient(configuration.GetConnectionString("mongo-db")));
-            services.AddScoped<IRepository, MongoRepository>();
+            services.AddScoped<IRepository, MongoRepository>(p =>
+                new MongoRepository(p.GetService<IMongoClient>(), "customers-service"));
 
             services.AddMassTransit(x =>
             {

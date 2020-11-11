@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Gamer.Commands;
-using Gamer.Customer.Customers.Infrastructure;
 using Gamer.Events;
 using MassTransit;
+using mongo.repository;
 
 namespace Gamer.Customer.Customers.Consumers
 {

@@ -1,0 +1,35 @@
+﻿@page "/menus"
+
+@using mongo.repository
+@using Gamer.Customer.Website.Models
+<h3>Menu</h3>
+
+@foreach (var menu in Current)
+{
+    <h5>@menu.Name</h5>
+    <ul>
+        @foreach (var category in menu.Categories)
+        {
+            <li>
+                @category.Name<br />
+                <ul>
+                    @foreach (var item in category.Items)
+                    {
+                        <li>@item.Name&nbsp;&nbsp;@item.Price</li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+}
+@code {
+    [Inject]
+    public IRepository Repository { get; set; }
+
+    public IEnumerable<Menu> Current { get; set; } = new List<Menu>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Current = await Repository.Query<Menu>("menus", q => !string.IsNullOrEmpty(q.Name));
+    }
+}

@@ -13,12 +13,13 @@
   <ItemGroup>
     <PackageReference Include="MassTransit.AspNetCore" Version="7.0.6" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.0.6" />
-    <PackageReference Include="MongoDB.Driver" Version="2.11.3" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Commands\commands\commands.csproj" />
     <ProjectReference Include="..\..\Shared\events\events.csproj" />
+    <ProjectReference Include="..\..\Shared\mongo.repository\mongo.repository.csproj" />
   </ItemGroup>
 
 </Project>

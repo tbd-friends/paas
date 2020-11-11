@@ -3,6 +3,7 @@ using Gamer.Customer.Website.Infrastructure;
 using Gamer.Customer.Website.Infrastructure.Model;
 using Gamer.Events;
 using MassTransit;
+using mongo.repository;
 
 namespace Gamer.Customer.Website.Consumers
 {

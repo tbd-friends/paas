@@ -1,11 +1,11 @@
 using Gamer.Customer.Website.Consumers;
-using Gamer.Customer.Website.Infrastructure;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using mongo.repository;
 using MongoDB.Driver;
 
 namespace Gamer.Customer.Website
@@ -28,7 +28,8 @@ namespace Gamer.Customer.Website
 
             services.AddSingleton<IMongoClient>(provider =>
                 new MongoClient(Configuration.GetConnectionString("mongo-db")));
-            services.AddScoped<IRepository, MongoRepository>();
+            services.AddScoped<IRepository, MongoRepository>(p => 
+                new MongoRepository(p.GetService<IMongoClient>(), "website"));
 
             services.AddMassTransit(x =>
             {

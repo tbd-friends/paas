@@ -23,12 +23,13 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.9" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.9" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.9" />
-    <PackageReference Include="MongoDB.Driver" Version="2.11.3" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Commands\commands\commands.csproj" />
     <ProjectReference Include="..\..\Shared\events\events.csproj" />
+    <ProjectReference Include="..\..\Shared\mongo.repository\mongo.repository.csproj" />
   </ItemGroup>
 
 </Project>
