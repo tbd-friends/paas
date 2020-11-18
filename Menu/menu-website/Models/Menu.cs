@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using Confluent.Kafka;
 using Gamer.Menu.Website.Serializers;
 
+// Models should be the interface, for a thing that is described by "CreateMenu"
+// CreateMenu should be broken out into more things, as its too big currently
+
 namespace kafka.consumers.Models
 {
     public class Menu
