@@ -1,0 +1,15 @@
+﻿@using interactions.models
+
+<h5>@Menu.Name</h5>
+
+@foreach (var category in Menu.Categories)
+{
+    <ul>
+        <CategoryDisplay Category="@category" />
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public Menu Menu { get; set; }
+}

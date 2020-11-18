@@ -1,4 +1,4 @@
-﻿namespace Gamer.Customer.Website.Models
+﻿namespace kafka.consumers.ConsumedModels
 {
     public class Item
     {

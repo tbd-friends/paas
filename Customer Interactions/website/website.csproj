@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\Commands\commands\commands.csproj" />
     <ProjectReference Include="..\..\Shared\events\events.csproj" />
     <ProjectReference Include="..\..\Shared\mongo.repository\mongo.repository.csproj" />
+    <ProjectReference Include="..\interactions.models\interactions.models.csproj" />
   </ItemGroup>
 
 </Project>

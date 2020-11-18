@@ -1,4 +1,4 @@
-﻿namespace kafka.consumers.Models
+﻿namespace interactions.models
 {
     public class Item
     {

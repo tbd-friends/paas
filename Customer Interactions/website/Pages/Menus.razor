@@ -1,27 +1,15 @@
 ﻿@page "/menus"
 
 @using mongo.repository
-@using Gamer.Customer.Website.Models
+@using interactions.models
+
 <h3>Menu</h3>
 
 @foreach (var menu in Current)
 {
-    <h5>@menu.Name</h5>
-    <ul>
-        @foreach (var category in menu.Categories)
-        {
-            <li>
-                @category.Name<br />
-                <ul>
-                    @foreach (var item in category.Items)
-                    {
-                        <li>@item.Name&nbsp;&nbsp;@item.Price</li>
-                    }
-                </ul>
-            </li>
-        }
-    </ul>
+    <MenuDisplay Menu="@menu" />
 }
+
 @code {
     [Inject]
     public IRepository Repository { get; set; }

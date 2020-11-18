@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace kafka.consumers.Models
+namespace kafka.consumers.ConsumedModels
 {
     public class Menu
     {

@@ -1,0 +1,12 @@
+﻿@using interactions.models
+
+<ul>
+    @foreach (var item in Items)
+    {
+        <li>@item.Name&nbsp;&nbsp;@item.Price</li>
+    }
+</ul>
+@code {
+    [Parameter]
+    public IEnumerable<Item> Items { get; set; }
+}

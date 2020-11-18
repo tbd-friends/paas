@@ -1,0 +1,9 @@
+﻿@using interactions.models
+
+<h4>@Category.Name</h4>
+<ItemDisplay Items="@Category.Items" />
+
+@code {
+    [Parameter]
+    public Category Category { get; set; }
+}
