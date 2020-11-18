@@ -1,13 +1,34 @@
 
 namespace kafka.consumers.Models
 {
-    public class Menu implements IMenu
+    ArrayList<Item, Category> currentMenu;
+    public class Menu
     {
         public string Name { get; set; }
         public IEnumerable<Category> Categories { get; set; }
     }
 
-    public async Task CreateMenu()
+    public void CreateMenu()
+    {
+        
+        currentMenu.push(
+            new Category(){Name = "Appetizers", 
+            new Item() {Name = "Mozzarella Sticks", Price = 9.99}
+        )
+
+        currentMenu.push(
+            new Category(){Name = "Appetizers", 
+            new Item() {Name = "Garlic Bread", Price = 9.99}
+        )
+
+        currentMenu.push(
+            new Category(){Name = "Appetizers", 
+            new Item() {Name = "Wings", Price = 9.99}
+        )
+        
+    }
+
+    public void PublishMenu()
     {
         var configuration = new Dictionary<string, string>()
         {
@@ -21,32 +42,8 @@ namespace kafka.consumers.Models
         await producer.ProduceAsync("menus", new Message<Guid, Menu>()
         {
             Key = Guid.NewGuid(),
-            Value = new Menu
-            {
-                Name = Model.Name,
-                Categories = new[]
-                {
-                    new Category()
-                    {
-                        Name = "Appetizers", Items = new[]
-                        {
-                            new Item() {Name = "Mozzarella Sticks", Price = 9.99},
-                            new Item() {Name = "Garlic Bread", Price = 6.99},
-                            new Item() {Name = "Wings", Price = 12.99},
-                        }
-                    },
-                    new Category()
-                    {
-                        Name = "Pizzas", Items = new[]
-                        {
-                            new Item() {Name = "Cheese", Price = 9.99},
-                            new Item() {Name = "Pepperoni", Price = 10.99},
-                            new Item() {Name = "Ham & Pineapple", Price = 19.99},
-                        }
-                    },
-                }
-            }
-        });
+            Value = currentMenu
+        };
     }
 
 }

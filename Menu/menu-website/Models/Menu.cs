@@ -2,9 +2,6 @@ using System.Collections.Generic;
 using Confluent.Kafka;
 using Gamer.Menu.Website.Serializers;
 
-// Models should be the interface, for a thing that is described by "CreateMenu"
-// CreateMenu should be broken out into more things, as its too big currently
-
 namespace kafka.consumers.Models
 {
     public interface IMenu
@@ -13,6 +10,8 @@ namespace kafka.consumers.Models
         public IEnumerable<Category> Categories { get; set; }
     }
 
+    // Should be separated into a method that creates the menu, and one that
+    // publishes the menu
     public async Task CreateMenu()
     {
         var configuration = new Dictionary<string, string>()
