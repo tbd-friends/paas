@@ -1,13 +1,7 @@
-using System.Collections.Generic;
-using Confluent.Kafka;
-using Gamer.Menu.Website.Serializers;
-
-// Models should be the interface, for a thing that is described by "CreateMenu"
-// CreateMenu should be broken out into more things, as its too big currently
 
 namespace kafka.consumers.Models
 {
-    public interface IMenu
+    public class Menu implements IMenu
     {
         public string Name { get; set; }
         public IEnumerable<Category> Categories { get; set; }
@@ -54,4 +48,5 @@ namespace kafka.consumers.Models
             }
         });
     }
+
 }
