@@ -1,6 +1,15 @@
 version: '3.6'
 
 services:
+    sqlserver:
+        image: 'mcr.microsoft.com/mssql/server:2019-latest'
+        container_name: 'sqlserver'
+        ports: 
+            - '1434:1433'
+        environment:
+            SA_PASSWORD: 'STr0ng!p@s5w0rd'
+            ACCEPT_EULA: 'Y'
+
     mongodev:
         image: 'mongo:latest'
         container_name: mongodev
