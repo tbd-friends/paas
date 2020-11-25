@@ -26,6 +26,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\mongo.repository\mongo.repository.csproj" />
+    <ProjectReference Include="..\interactions.models\interactions.models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

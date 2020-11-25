@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
+using kafka.consumers.ConsumedModels;
 using kafka.consumers.Infrastructure;
-using kafka.consumers.Models;
 using Microsoft.Extensions.Configuration;
 using mongo.repository;
 
@@ -43,11 +44,12 @@ namespace kafka.consumers
 
                 if (result != null)
                 {
-                    await _repository.Add(result.Message.Value, "menus");
+                    await _repository.Add(result.Message.Value.AsStorage(), "menus");
 
                     consumer.Commit(result);
                 }
             } while (!cancellationToken.IsCancellationRequested);
         }
     }
+
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Gamer.Customer.Website.Models
+namespace interactions.models
 {
     public class Category
     {

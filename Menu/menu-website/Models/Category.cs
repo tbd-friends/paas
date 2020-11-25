@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace kafka.consumers.Models
+namespace Gamer.Menu.Website.Models
 {
     public class Category
     {

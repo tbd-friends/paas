@@ -1,5 +1,6 @@
 ﻿@page "/menus"
 @using Confluent.Kafka
+@using Gamer.Menu.Website.Models
 @using Gamer.Menu.Website.Serializers
 
 <h3>Menus</h3>
@@ -16,28 +17,6 @@
 @code {
 
     public Menu Model { get; set; } = new Menu();
-
-    // Name  (All-Day, Childrens, Seniors)
-    // Categories +
-    //  Items +
-
-    public class Menu
-    {
-        public string Name { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
-    }
-
-    public class Category
-    {
-        public string Name { get; set; }
-        public IEnumerable<Item> Items { get; set; }
-    }
-
-    public class Item
-    {
-        public string Name { get; set; }
-        public double Price { get; set; }
-    }
 
     public async Task CreateMenu()
     {
