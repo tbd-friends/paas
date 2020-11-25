@@ -1,5 +1,9 @@
+using Gamer.Menu.Application.Commands;
+using Gamer.Menu.Core;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +25,13 @@ namespace Gamer.Menu.Website
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddDbContext<ApplicationContext>(cfg =>
+                cfg.UseSqlServer(Configuration.GetConnectionString("Menus")));
+
+            services.AddScoped<IApplicationContext, ApplicationContext>();
+
+            services.AddMediatR(typeof(CreateMenu).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

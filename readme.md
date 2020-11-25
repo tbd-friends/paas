@@ -13,6 +13,8 @@ A continuing effort to demonstrate and create discussion points for distributed 
 - Checkout repository
 - Start Required Services
 - docker-compose -f docker-compose.infra.yml up -d 
+- open console, navigate to menu/menu-website
+	- dotnet ef database update
 - start website, loyalty and customers services
 - Navigate to https://localhost:5001 
 - Register

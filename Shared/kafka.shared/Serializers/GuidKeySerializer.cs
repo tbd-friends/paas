@@ -1,7 +1,7 @@
 ﻿using System;
 using Confluent.Kafka;
 
-namespace Gamer.Menu.Website.Serializers
+namespace kafka.shared.Serializers
 {
     public class GuidKeySerializer : ISerializer<Guid>
     {

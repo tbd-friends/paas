@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Confluent.Kafka;
 
-namespace Gamer.Menu.Website.Serializers
+namespace kafka.shared.Serializers
 {
     public class JsonValueSerializer<T> : ISerializer<T>
         where T : class
