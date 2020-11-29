@@ -47,6 +47,8 @@ namespace Gamer.Menu.Core
                 .Property(p => p.Id)
                 .HasDefaultValueSql("newid()");
 
+            modelBuilder.Entity<Item>().Property(p => p.Price).HasColumnType("decimal(10,2)");
+
             modelBuilder.Entity<MenuCategory>()
                 .HasKey(k => k.Id);
 
