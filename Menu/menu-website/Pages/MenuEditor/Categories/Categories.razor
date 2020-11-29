@@ -1,0 +1,26 @@
+﻿@page "/menueditor/categories"
+@using Gamer.Menu.Website.Pages.MenuEditor
+@using Gamer.Menu.Core
+@using AutoMapper
+@using Gamer.Menu.Website.Models
+@using Gamer.Menu.Website.Pages.MenuEditor.Categories
+
+<MenuEditorNavigation />
+
+<h3>Categories</h3>
+
+<CategoryList Categories="@CategoriesList" />
+
+@code {
+    [Inject]
+    public IApplicationContext Context { get; set; }
+    [Inject]
+    public IMapper Mapper { get; set; }
+
+    public List<Category> CategoriesList { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CategoriesList = Context.Categories.Select(c => Mapper.Map<Category>(c)).ToList();
+    }
+}

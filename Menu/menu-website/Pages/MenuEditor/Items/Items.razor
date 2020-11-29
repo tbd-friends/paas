@@ -1,0 +1,26 @@
+﻿@page "/menueditor/items"
+@using Gamer.Menu.Website.Pages.MenuEditor
+@using Gamer.Menu.Core
+@using AutoMapper
+@using Gamer.Menu.Website.Models
+
+<MenuEditorNavigation />
+
+<h3>Items</h3>
+
+<ItemList Items="@ItemsList" />
+
+@code {
+    [Inject]
+    public IApplicationContext Context { get; set; }
+    [Inject]
+    public IMapper Mapper { get; set; }
+
+    public List<Item> ItemsList { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ItemsList = Context.Items.Select(i => Mapper.Map<Item>(i)).ToList();
+    }
+
+}
