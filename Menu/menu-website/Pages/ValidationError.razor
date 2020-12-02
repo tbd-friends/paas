@@ -1,0 +1,21 @@
+﻿@page "/menueditor/validationerror"
+@using Gamer.Menu.Application.Common.Exceptions
+
+<div>There was an error</div>
+<div>
+    @foreach (var error in Exception.Failures)
+    {
+        <div>Property: @error.Key</div>
+        <ul>
+            @foreach (var value in error.Value)
+            {
+                <li>@value</li>
+            }
+        </ul>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public ValidationException Exception { get; set; }
+}

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Gamer.Menu.Core;
+using Gamer.Menu.Core.Models;
 using MediatR;
 
 namespace Gamer.Menu.Application.Commands.Handlers
@@ -10,21 +10,21 @@ namespace Gamer.Menu.Application.Commands.Handlers
     public class CreateCategoryHandler : IRequestHandler<CreateCategory, Guid>
     {
         private readonly IApplicationContext _context;
-        private readonly IMapper _mapper;
 
-        public CreateCategoryHandler(IApplicationContext context, IMapper mapper)
+        public CreateCategoryHandler(IApplicationContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
-        public async Task<Guid> Handle(CreateCategory request, CancellationToken cancellationToken)
+        public Task<Guid> Handle(CreateCategory request, CancellationToken cancellationToken)
         {
-            var newEntity = _mapper.Map<Core.Models.Category>(request);
-            newEntity.UID = Guid.NewGuid();
+            var newEntity = new Category
+            {
+                Name = request.Name
+            };
             _context.Insert(newEntity);
             _context.SaveChanges();
-            return newEntity.UID;
+            return Task.FromResult(newEntity.UID);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿@page "/menueditor/menus/create"
 @using Gamer.Menu.Website.Models
+@using Gamer.Menu.Website.Pages.MenuEditor
 @using Gamer.Menu.Application.Commands
+@using Gamer.Menu.Application.Common.Exceptions
 @using MediatR
 @inject NavigationManager UriHelper
 
@@ -9,15 +11,28 @@
     <button class="btn btn-primary">Save</button>
 </EditForm>
 
+@if (Error != null)
+{
+    <ValidationError Exception="@Error" />
+}
+
 @code {
     [Inject]
     public IMediator Mediator { get; set; }
 
     public Menu Model { get; set; } = new Menu();
+    public ValidationException Error { get; set; }
 
     public async Task CreateMenu()
     {
-        await Mediator.Send(new CreateMenu() { Name = Model.Name });
-        UriHelper.NavigateTo("/menueditor/menus");
+        try
+        {
+            await Mediator.Send(new CreateMenu() { Name = Model.Name });
+            UriHelper.NavigateTo("/menueditor/menus");
+        }
+        catch (ValidationException ex)
+        {
+            Error = ex;
+        }
     }
 }

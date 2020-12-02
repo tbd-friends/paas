@@ -33,12 +33,21 @@ namespace Gamer.Menu.Core
                 .Property(p => p.Id)
                 .HasDefaultValueSql("newid()");
 
+            modelBuilder.Entity<ModelMenu>()
+                .Property(p => p.UID)
+                .HasDefaultValueSql("newid()");
+
             modelBuilder.Entity<Category>()
                 .HasKey(k => k.Id);
 
             modelBuilder.Entity<Category>()
                 .Property(p => p.Id)
                 .HasDefaultValueSql("newid()");
+
+            modelBuilder.Entity<Category>()
+                .Property(p => p.UID)
+                .HasDefaultValueSql("newid()");
+
 
             modelBuilder.Entity<Item>()
                 .HasKey(k => k.Id);
@@ -47,6 +56,10 @@ namespace Gamer.Menu.Core
                 .Property(p => p.Id)
                 .HasDefaultValueSql("newid()");
 
+            modelBuilder.Entity<Item>()
+                .Property(p => p.UID)
+                .HasDefaultValueSql("newid()");
+            
             modelBuilder.Entity<Item>().Property(p => p.Price).HasColumnType("decimal(10,2)");
 
             modelBuilder.Entity<MenuCategory>()

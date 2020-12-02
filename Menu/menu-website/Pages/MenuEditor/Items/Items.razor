@@ -1,7 +1,6 @@
 ﻿@page "/menueditor/items"
 @using Gamer.Menu.Website.Pages.MenuEditor
 @using Gamer.Menu.Core
-@using AutoMapper
 @using Gamer.Menu.Website.Models
 @inject NavigationManager UriHelper
 
@@ -17,14 +16,18 @@
 @code {
     [Inject]
     public IApplicationContext Context { get; set; }
-    [Inject]
-    public IMapper Mapper { get; set; }
 
     public List<Item> ItemsList { get; set; }
 
     protected override void OnInitialized()
     {
-        ItemsList = Context.Items.Select(i => Mapper.Map<Item>(i)).ToList();
+        ItemsList = Context.Items.Select(i => new Item
+        {
+            UID = i.UID,
+            Name = i.Name,
+            Description = i.Description,
+            Price = i.Price
+        }).ToList();
     }
 
     public void AddClicked()

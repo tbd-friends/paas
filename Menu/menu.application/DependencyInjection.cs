@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using AutoMapper;
 using FluentValidation;
 using Gamer.Menu.Application.Common.MediatrBehaviors;
 using MediatR;
@@ -13,8 +12,7 @@ namespace Gamer.Menu.Application
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+            
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly())
                 .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
 

@@ -6,7 +6,6 @@
 @using Gamer.Menu.Website.Pages.MenuEditor
 @using Gamer.Menu.Website.Pages.MenuEditor.Menus
 @using MediatR
-@using AutoMapper
 @inject NavigationManager UriHelper
 
 <MenuEditorNavigation />
@@ -21,14 +20,16 @@
 @code {
     [Inject]
     public IApplicationContext Context { get; set; }
-    [Inject]
-    public IMapper Mapper { get; set; }
 
     public List<Menu> MenuList { get; set; }
 
     protected override void OnInitialized()
     {
-        MenuList = Context.Menus.Select(m => Mapper.Map<Menu>(m)).ToList();
+        MenuList = Context.Menus.Select(m => new Menu
+        {
+            UID = m.UID,
+            Name = m.Name
+        }).ToList();
     }
 
     public void AddClicked()

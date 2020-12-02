@@ -16,7 +16,7 @@ namespace Gamer.Menu.Application.Commands.Handlers
             _context = context;
         }
 
-        protected override async Task Handle(AssociateCategoryWithMenu request, CancellationToken cancellationToken)
+        protected override Task Handle(AssociateCategoryWithMenu request, CancellationToken cancellationToken)
         {
             var category = _context.Categories.FirstOrDefault(c => c.UID == request.CategoryUID);
             foreach (var menuId in request.MenuUIDS)
@@ -34,6 +34,7 @@ namespace Gamer.Menu.Application.Commands.Handlers
             }
 
             _context.SaveChanges();
+            return Task.CompletedTask;
         }
     }
 }

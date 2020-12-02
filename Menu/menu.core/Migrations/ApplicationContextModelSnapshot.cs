@@ -30,7 +30,9 @@ namespace Gamer.Menu.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UID")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.HasKey("Id");
 
@@ -54,7 +56,9 @@ namespace Gamer.Menu.Core.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<Guid>("UID")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.HasKey("Id");
 
@@ -72,7 +76,9 @@ namespace Gamer.Menu.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UID")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.HasKey("Id");
 

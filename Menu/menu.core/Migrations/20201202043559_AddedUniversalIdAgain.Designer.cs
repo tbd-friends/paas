@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gamer.Menu.Core.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20201129233055_AddedUniversalId")]
-    partial class AddedUniversalId
+    [Migration("20201202043559_AddedUniversalIdAgain")]
+    partial class AddedUniversalIdAgain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,9 @@ namespace Gamer.Menu.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UID")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.HasKey("Id");
 
@@ -56,7 +58,9 @@ namespace Gamer.Menu.Core.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<Guid>("UID")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.HasKey("Id");
 
@@ -74,7 +78,9 @@ namespace Gamer.Menu.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UID")
-                        .HasColumnType("uniqueidentifier");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
                     b.HasKey("Id");
 
