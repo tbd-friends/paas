@@ -1,0 +1,60 @@
+﻿@page "/menueditor/items/create"
+@using Gamer.Menu.Website.Models
+@using Gamer.Menu.Application.Commands
+@using MediatR
+@using Gamer.Menu.Website.Pages.Components
+@using AutoMapper
+@using Gamer.Menu.Core
+
+@inject NavigationManager UriHelper
+
+<EditForm Model="Model" OnValidSubmit="CreateItem">
+    <InputText @bind-Value="Model.Name" placeholder="Menu Name" />
+    <InputText @bind-Value="Model.Description" placeholder="Menu Description" />
+    <InputNumber @bind-Value="Model.Price" placeholder="Menu Price" />
+    <CheckboxList Data="@Categories"
+                  TextField="@((item)=>item.Name)"
+                  ValueField="@((item)=>item.UID)"
+                  SelectedValues="@SelectedCategories" />
+
+    <button class="btn btn-primary">Save</button>
+</EditForm>
+
+@code {
+    [Inject]
+    public IApplicationContext Context { get; set; }
+    [Inject]
+    public IMediator Mediator { get; set; }
+    [Inject]
+    public IMapper Mapper { get; set; }
+
+    public List<Category> Categories { get; set; }
+    public List<string> SelectedCategories { get; set; } = new List<string>();
+
+    public Item Model { get; set; } = new Item();
+
+    public async Task CreateItem()
+    {
+        var itemUID = await Mediator.Send(new CreateItem()
+        {
+            Name = Model.Name,
+            Description = Model.Description,
+            Price = Model.Price
+        });
+        if (SelectedCategories.Any())
+        {
+            await Mediator.Send(new AssociateItemWithCategory()
+            {
+                ItemUID = itemUID,
+                CategoryUIDS = SelectedCategories.Select(m => Guid.Parse(m))
+            });
+        }
+        UriHelper.NavigateTo("/menueditor/items");
+    }
+
+    protected override void OnInitialized()
+    {
+        Categories = Context.Categories.Select(c => Mapper.Map<Category>(c)).ToList();
+    }
+
+}

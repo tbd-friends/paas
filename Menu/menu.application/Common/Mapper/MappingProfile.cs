@@ -10,6 +10,7 @@ namespace Gamer.Menu.Application.Common.Mapper
         public MappingProfile()
         {
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+            ApplyMappingsFromAssembly(Assembly.GetEntryAssembly());
         }
 
         private void ApplyMappingsFromAssembly(Assembly assembly)

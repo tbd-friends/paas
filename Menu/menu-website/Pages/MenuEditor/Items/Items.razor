@@ -3,10 +3,14 @@
 @using Gamer.Menu.Core
 @using AutoMapper
 @using Gamer.Menu.Website.Models
+@inject NavigationManager UriHelper
 
 <MenuEditorNavigation />
 
-<h3>Items</h3>
+<div>
+    <h3>Items</h3>
+    <button @onclick="@AddClicked">Add</button>
+</div>
 
 <ItemList Items="@ItemsList" />
 
@@ -21,6 +25,11 @@
     protected override void OnInitialized()
     {
         ItemsList = Context.Items.Select(i => Mapper.Map<Item>(i)).ToList();
+    }
+
+    public void AddClicked()
+    {
+        UriHelper.NavigateTo("/menueditor/items/create");
     }
 
 }

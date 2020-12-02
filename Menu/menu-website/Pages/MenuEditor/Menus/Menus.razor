@@ -7,10 +7,14 @@
 @using Gamer.Menu.Website.Pages.MenuEditor.Menus
 @using MediatR
 @using AutoMapper
+@inject NavigationManager UriHelper
 
 <MenuEditorNavigation />
 
-<h3>Menus</h3>
+<div>
+    <h3>Menus</h3>
+    <button @onclick="@AddClicked">Add</button>
+</div>
 
 <MenuList Menus="@MenuList" />
 
@@ -25,5 +29,10 @@
     protected override void OnInitialized()
     {
         MenuList = Context.Menus.Select(m => Mapper.Map<Menu>(m)).ToList();
+    }
+
+    public void AddClicked()
+    {
+        UriHelper.NavigateTo("/menueditor/menus/create");
     }
 }
