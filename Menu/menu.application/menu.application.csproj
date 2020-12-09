@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\Handlers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.3.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
@@ -19,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\menu.core\menu.core.csproj" />
+    <ProjectReference Include="..\menu.viewmodels\menu.viewmodels.csproj" />
   </ItemGroup>
 
 </Project>

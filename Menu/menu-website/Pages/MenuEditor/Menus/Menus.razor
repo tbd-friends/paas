@@ -1,6 +1,7 @@
 ﻿@page "/menueditor/menus"
 @using Confluent.Kafka
 @using Gamer.Menu.Application.Commands
+@using Gamer.Menu.Application.Queries
 @using Gamer.Menu.Core
 @using Gamer.Menu.Website.Models
 @using Gamer.Menu.Website.Pages.MenuEditor
@@ -19,17 +20,13 @@
 
 @code {
     [Inject]
-    public IApplicationContext Context { get; set; }
+    public IMediator Mediator { get; set; }
 
-    public List<Menu> MenuList { get; set; }
+    public IEnumerable<MenuViewModel> MenuList { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        MenuList = Context.Menus.Select(m => new Menu
-        {
-            UID = m.UID,
-            Name = m.Name
-        }).ToList();
+        MenuList = await Mediator.Send(new GetMenus());
     }
 
     public void AddClicked()
