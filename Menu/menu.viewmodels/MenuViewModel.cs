@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace menu.viewmodels
 {
@@ -9,5 +9,8 @@ namespace menu.viewmodels
         public Guid Uid { get; set; }
         public string Name { get; set; }
         public IEnumerable<MenuCategoryViewModel> Categories { get; set; }
+
+        public bool CanBePublished => 
+            Categories.Any() && Categories.All(c => c.Items.Any());
     }
 }
