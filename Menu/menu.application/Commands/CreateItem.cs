@@ -1,11 +1,10 @@
 ﻿using System;
+using MediatR;
 
-namespace Gamer.Menu.Core.Models
+namespace Gamer.Menu.Application.Commands
 {
-    public class Item
+    public class CreateItem : IRequest<Guid>
     {
-        public Guid Id { get; set; }
-        public Guid UID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }

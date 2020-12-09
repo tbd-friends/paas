@@ -1,0 +1,38 @@
+﻿@using Gamer.Menu.Website.Models
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{if (Items.Any())
+            {
+                foreach (var item in Items)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>No items found</td>
+                </tr>
+            }}
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<Item> Items { get; set; }
+}

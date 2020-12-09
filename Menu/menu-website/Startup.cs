@@ -1,3 +1,5 @@
+using Confluent.Kafka;
+using Gamer.Menu.Application;
 using Gamer.Menu.Application.Commands;
 using Gamer.Menu.Core;
 using MediatR;
@@ -23,15 +25,11 @@ namespace Gamer.Menu.Website
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCore(Configuration);
+            services.AddApplication(Configuration);
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
-
-            services.AddDbContext<ApplicationContext>(cfg =>
-                cfg.UseSqlServer(Configuration.GetConnectionString("Menus")));
-
-            services.AddScoped<IApplicationContext, ApplicationContext>();
-
-            services.AddMediatR(typeof(CreateMenu).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,38 @@
+﻿@page "/menueditor/items"
+@using Gamer.Menu.Website.Pages.MenuEditor
+@using Gamer.Menu.Core
+@using Gamer.Menu.Website.Models
+@inject NavigationManager UriHelper
+
+<MenuEditorNavigation />
+
+<div>
+    <h3>Items</h3>
+    <button @onclick="@AddClicked">Add</button>
+</div>
+
+<ItemList Items="@ItemsList" />
+
+@code {
+    [Inject]
+    public IApplicationContext Context { get; set; }
+
+    public List<Item> ItemsList { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ItemsList = Context.Items.Select(i => new Item
+        {
+            UID = i.UID,
+            Name = i.Name,
+            Description = i.Description,
+            Price = i.Price
+        }).ToList();
+    }
+
+    public void AddClicked()
+    {
+        UriHelper.NavigateTo("/menueditor/items/create");
+    }
+
+}

@@ -1,0 +1,39 @@
+﻿@page "/menueditor/menus"
+@using Confluent.Kafka
+@using Gamer.Menu.Application.Commands
+@using Gamer.Menu.Core
+@using Gamer.Menu.Website.Models
+@using Gamer.Menu.Website.Pages.MenuEditor
+@using Gamer.Menu.Website.Pages.MenuEditor.Menus
+@using MediatR
+@inject NavigationManager UriHelper
+
+<MenuEditorNavigation />
+
+<div>
+    <h3>Menus</h3>
+    <button @onclick="@AddClicked">Add</button>
+</div>
+
+<MenuList Menus="@MenuList" />
+
+@code {
+    [Inject]
+    public IApplicationContext Context { get; set; }
+
+    public List<Menu> MenuList { get; set; }
+
+    protected override void OnInitialized()
+    {
+        MenuList = Context.Menus.Select(m => new Menu
+        {
+            UID = m.UID,
+            Name = m.Name
+        }).ToList();
+    }
+
+    public void AddClicked()
+    {
+        UriHelper.NavigateTo("/menueditor/menus/create");
+    }
+}

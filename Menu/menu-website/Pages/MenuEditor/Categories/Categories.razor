@@ -1,0 +1,36 @@
+﻿@page "/menueditor/categories"
+@using Gamer.Menu.Website.Pages.MenuEditor
+@using Gamer.Menu.Core
+@using Gamer.Menu.Website.Models
+@using Gamer.Menu.Website.Pages.MenuEditor.Categories
+@inject NavigationManager UriHelper
+
+<MenuEditorNavigation />
+
+<div>
+    <h3>Categories</h3>
+    <button @onclick="@AddClicked">Add</button>
+</div>
+
+<CategoryList Categories="@CategoriesList" />
+
+@code {
+    [Inject]
+    public IApplicationContext Context { get; set; }
+
+    public List<Category> CategoriesList { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CategoriesList = Context.Categories.Select(c => new Category
+        {
+            UID = c.UID,
+            Name = c.Name
+        }).ToList();
+    }
+
+    public void AddClicked()
+    {
+        UriHelper.NavigateTo("/menueditor/categories/create");
+    }
+}

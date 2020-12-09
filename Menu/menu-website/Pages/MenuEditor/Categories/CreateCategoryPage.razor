@@ -1,0 +1,52 @@
+﻿@page "/menueditor/categories/create"
+@using Gamer.Menu.Website.Models
+@using Gamer.Menu.Application.Commands
+@using Gamer.Menu.Core
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using MediatR
+@using Microsoft.EntityFrameworkCore.Internal
+@using Microsoft.EntityFrameworkCore.Metadata
+@using Gamer.Menu.Website.Pages.Components
+
+@inject NavigationManager UriHelper
+
+<EditForm Model="Model" OnValidSubmit="CreateCategory">
+    <InputText @bind-Value="Model.Name" placeholder="Category Name" />
+    <CheckboxList Data="@Menus"
+                  TextField="@((item)=>item.Name)"
+                  ValueField="@((item)=>item.UID)"
+                  SelectedValues="@SelectedMenus" />
+    <button class="btn btn-primary">Save</button>
+</EditForm>
+
+@code {
+    [Inject]
+    public IApplicationContext Context { get; set; }
+    [Inject]
+    public IMediator Mediator { get; set; }
+
+    public List<Menu> Menus { get; set; }
+    public List<string> SelectedMenus { get; set; } = new List<string>();
+
+    public Category Model { get; set; } = new Category();
+
+    public async Task CreateCategory()
+    {
+        await Mediator.Send(new CreateAndAssociateCategoryWithMenu
+        {
+            Name = Model.Name,
+            MenuIds = SelectedMenus.Select(Guid.Parse).ToList()
+        });
+        UriHelper.NavigateTo("/menueditor/categories");
+    }
+
+    protected override void OnInitialized()
+    {
+        Menus = Context.Menus.Select(m => new Menu
+        {
+            UID = m.UID,
+            Name = m.Name
+        }).ToList();
+    }
+}

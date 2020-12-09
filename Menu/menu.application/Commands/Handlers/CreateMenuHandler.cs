@@ -17,10 +17,11 @@ namespace Gamer.Menu.Application.Commands.Handlers
 
         protected override Task Handle(CreateMenu request, CancellationToken cancellationToken)
         {
-            _context.Insert(new ModelMenu { Name = request.Name });
-
+            _context.Insert(new ModelMenu
+            {
+                Name = request.Name
+            });
             _context.SaveChanges();
-
             return Task.CompletedTask;
         }
     }
