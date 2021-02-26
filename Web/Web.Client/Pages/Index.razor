@@ -1,0 +1,23 @@
+﻿@page "/"
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var restaurantId = await localStorage.GetItemAsStringAsync("restaurantId");
+
+        if(string.IsNullOrEmpty(restaurantId))
+            NavigationManager.NavigateTo("locations");
+        else 
+            NavigationManager.NavigateTo("menu");
+    }
+}

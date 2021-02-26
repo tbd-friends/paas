@@ -1,0 +1,40 @@
+﻿@page "/locations"
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+
+<h3>Restaurants</h3>
+
+@if (restaurants == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ul>
+        @foreach (var restaurant in restaurants)
+        {
+            <li>
+                <div>
+                    <div>@restaurant.Name</div>
+                    <button @onclick="() => OrderNow(restaurant.Id)">Order Now</button>
+                </div>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private Restaurant[] restaurants;
+
+    protected override async Task OnInitializedAsync()
+    {
+        restaurants = await Http.GetFromJsonAsync<Restaurant[]>("sample-data/restaurants.json");
+    }
+
+    private async Task OrderNow(string restaurantId)
+    {
+        await localStorage.SetItemAsync("restaurantId", restaurantId);
+        NavigationManager.NavigateTo("menu");
+    }
+}

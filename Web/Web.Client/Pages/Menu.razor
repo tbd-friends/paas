@@ -1,0 +1,64 @@
+﻿@page "/menu"
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+
+<h3>Menu</h3>
+@if (menuConfiguration == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ul>
+        @foreach (var category in menuConfiguration.Categories)
+        {
+            <li>@category.Value.Name</li>
+        }
+    </ul>
+}
+
+@if (restaurant == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <div>Location</div>
+        <div>@restaurant.Name</div>
+    </div>
+}
+
+@code
+{
+    private Restaurant restaurant = null;
+    private MenuConfiguration menuConfiguration = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var restaurantId = await localStorage.GetItemAsStringAsync("restaurantId");
+
+        if (string.IsNullOrEmpty(restaurantId))
+            NavigationManager.NavigateTo("locations");
+        else
+        {
+            var restaurants = await Http.GetFromJsonAsync<Restaurant[]>("sample-data/restaurants.json");
+            restaurant = restaurants.SingleOrDefault(x => x.Id == restaurantId);
+            menuConfiguration = await Http.GetFromJsonAsync<MenuConfiguration>("sample-data/menu.json");
+        }
+    }
+
+    public class MenuConfiguration
+    {
+        public Dictionary<string, Category> Categories { get; set; }
+    }
+
+    public class Category
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
+}
+

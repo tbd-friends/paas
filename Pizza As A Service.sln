@@ -42,7 +42,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "menu.core", "Menu\menu.core
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "menu.application", "Menu\menu.application\menu.application.csproj", "{1C02381B-8116-4C94-A525-D268604FFA98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kafka.shared", "Shared\kafka.shared\kafka.shared.csproj", "{E63BCE60-8C18-43D2-A528-1E113058B150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kafka.shared", "Shared\kafka.shared\kafka.shared.csproj", "{E63BCE60-8C18-43D2-A528-1E113058B150}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{3E78A177-00F3-498A-AC1C-F987DA60E54A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Client", "Web\Web.Client\Web.Client.csproj", "{9F1979A0-0ADA-4865-AF24-253687A6C4DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,6 +102,10 @@ Global
 		{E63BCE60-8C18-43D2-A528-1E113058B150}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E63BCE60-8C18-43D2-A528-1E113058B150}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E63BCE60-8C18-43D2-A528-1E113058B150}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F1979A0-0ADA-4865-AF24-253687A6C4DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F1979A0-0ADA-4865-AF24-253687A6C4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F1979A0-0ADA-4865-AF24-253687A6C4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F1979A0-0ADA-4865-AF24-253687A6C4DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +123,7 @@ Global
 		{5CCFD9B6-27E7-4506-9BED-4992C09650B8} = {7F0568E5-FF78-4BEA-AFDA-D895A6B18C2F}
 		{1C02381B-8116-4C94-A525-D268604FFA98} = {7F0568E5-FF78-4BEA-AFDA-D895A6B18C2F}
 		{E63BCE60-8C18-43D2-A528-1E113058B150} = {6FF81998-FF96-4F19-B233-76FE2F58A59B}
+		{9F1979A0-0ADA-4865-AF24-253687A6C4DF} = {3E78A177-00F3-498A-AC1C-F987DA60E54A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F55F4AC-3E96-456C-B665-76F6405F3448}

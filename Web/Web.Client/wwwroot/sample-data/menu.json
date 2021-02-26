@@ -1,0 +1,20 @@
+{
+  "categories": {
+    "wings": {
+      "id": "wings",
+      "name": "Wings"
+    },
+    "sauces": {
+      "id": "sauces",
+      "name": "Sauces"
+    },
+    "desserts": {
+      "id": "desserts",
+      "name": "Desserts"
+    },
+    "drinks": {
+      "id": "drinks",
+      "name": "Drinks"
+    }
+  }
+}
