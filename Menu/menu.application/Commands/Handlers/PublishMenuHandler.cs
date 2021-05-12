@@ -14,21 +14,23 @@ namespace Gamer.Menu.Application.Commands.Handlers
 {
     public class PublishMenuHandler : IRequestHandler<PublishMenu>
     {
-        private readonly IConfiguration _configuration;
+        private readonly IDictionary<string, string> _kafkaConfiguration;
         private readonly IApplicationContext _context;
 
         public PublishMenuHandler(IConfiguration configuration, IApplicationContext context)
         {
-            _configuration = configuration;
+            _kafkaConfiguration = new Dictionary<string, string>();
+
+            configuration
+                .GetSection("kafka:producer")
+                .Bind(_kafkaConfiguration);
+
             _context = context;
         }
 
         public async Task<Unit> Handle(PublishMenu request, CancellationToken cancellationToken)
         {
-            using var producer = new ProducerBuilder<Guid, PublishedMenu>(new Dictionary<string, string>
-                {
-                    {"bootstrap.servers", "127.0.0.1:9092"}
-                })
+            using var producer = new ProducerBuilder<Guid, PublishedMenu>(_kafkaConfiguration)
                 .SetKeySerializer(new GuidKeySerializer())
                 .SetValueSerializer(new JsonValueSerializer<PublishedMenu>())
                 .Build();

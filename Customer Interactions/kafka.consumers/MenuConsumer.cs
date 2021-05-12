@@ -9,6 +9,7 @@ using kafka.consumers.ConsumedModels;
 using kafka.consumers.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using mongo.repository;
+using StorageMenu = interactions.models.Menu;
 
 namespace kafka.consumers
 {
@@ -40,11 +41,26 @@ namespace kafka.consumers
 
             do
             {
-                var result = consumer.Consume(TimeSpan.FromMilliseconds(500));
+                var result = consumer.Consume(cancellationToken);
 
                 if (result != null)
                 {
-                    await _repository.Add(result.Message.Value.AsStorage(), "menus");
+                    var existing =
+                        (await _repository.Query<StorageMenu>("menus", m => m.SourceMenuId == result.Message.Key)
+                        ).SingleOrDefault();
+
+                    if (existing != null)
+                    {
+                        var replacement = result.Message.Value.AsStorage();
+
+                        replacement.Id = existing.Id;
+
+                        await _repository.Replace(replacement, m => m.SourceMenuId == result.Message.Key, "menus");
+                    }
+                    else
+                    {
+                        await _repository.Add(result.Message.Value.AsStorage(), "menus");
+                    }
 
                     consumer.Commit(result);
                 }

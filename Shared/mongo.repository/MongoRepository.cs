@@ -22,6 +22,15 @@ namespace mongo.repository
             await collection.InsertOneAsync(entity);
         }
 
+        public async Task Replace<T>(T replacement,
+            Expression<Func<T, bool>> find,
+            string collectionName)
+        {
+            var collection = _database.GetCollection<T>(collectionName);
+
+            await collection.ReplaceOneAsync(find, replacement);
+        }
+
         public async Task<IEnumerable<TDocument>> Query<TDocument>(string collectionName, Expression<Func<TDocument, bool>> query)
         {
             var collection = _database.GetCollection<TDocument>(collectionName);
