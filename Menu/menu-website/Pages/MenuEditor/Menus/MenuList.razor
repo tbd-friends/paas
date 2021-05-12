@@ -1,4 +1,6 @@
 ﻿@using System.Security.Policy
+@using Gamer.Menu.Application.Commands
+@using MediatR
 <table class="table">
     <thead>
         <tr>
@@ -33,9 +35,11 @@
 @code {
     [Parameter]
     public IEnumerable<MenuViewModel> Menus { get; set; }
+    [Inject]
+    public IMediator Mediator { get; set; }
 
     public async Task Publish(Guid id)
     {
-        await Task.CompletedTask;
+        await Mediator.Send(new PublishMenu { Id = id });
     }
 }
