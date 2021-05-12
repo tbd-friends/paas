@@ -1,36 +1,45 @@
-﻿@using Gamer.Menu.Website.Models
-
+﻿@using System.Security.Policy
+@using Gamer.Menu.Application.Commands
+@using MediatR
 <table class="table">
     <thead>
-    <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Actions</th>
-    </tr>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+        </tr>
     </thead>
     <tbody>
-    @{if( Menus.Any())
-    {
-        foreach (var menu in Menus)
-        {
-            <tr>
-                <td>@menu.Name</td>
-                <td>
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </td>
-            </tr>
-        }
-    }
-    else
-    {
-        <tr>
-            <td>No menus found</td>
-        </tr>
-    }}
+        @{if (Menus.Any())
+            {
+                foreach (var menu in Menus)
+                {
+                    <tr>
+                        <td>@menu.Name</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                            <button disabled="@(!menu.CanBePublished)" @onclick="() => Publish(menu.Uid)">Publish</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>No menus found</td>
+                </tr>
+            }}
     </tbody>
 </table>
 
 @code {
     [Parameter]
-    public List<Menu> Menus { get; set; }
+    public IEnumerable<MenuViewModel> Menus { get; set; }
+    [Inject]
+    public IMediator Mediator { get; set; }
+
+    public async Task Publish(Guid id)
+    {
+        await Mediator.Send(new PublishMenu { Id = id });
+    }
 }

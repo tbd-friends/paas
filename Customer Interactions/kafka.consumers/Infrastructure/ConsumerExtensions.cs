@@ -13,7 +13,7 @@ namespace kafka.consumers.Infrastructure
         {
             return new StorageMenu
             {
-                SourceMenuId = Guid.NewGuid(),
+                SourceMenuId = menu.Id,
                 Name = menu.Name,
                 Categories = from c in menu.Categories
                              select new StorageCategory
@@ -23,6 +23,7 @@ namespace kafka.consumers.Infrastructure
                                          select new StorageItem
                                          {
                                              Name = i.Name,
+                                             Description = i.Description,
                                              Price = i.Price
                                          }
                              }

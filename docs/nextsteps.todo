@@ -1,0 +1,17 @@
+Ideas:
+    - Login to Auth0 database
+    - Manage Roles / Access 
+    - Search                    
+    - GraphQL (readonly?)
+    - Search + GraphQL 
+    - Logging / Centralized Logging
+
+To Discuss:
+    ☐ Should a customer have to sign-in to be able to order a pizza?
+        ☐ What does the non-signed in workflow look like
+
+Next Steps:
+    ☐ Complete Implementation of Menu Publish
+    ☐ Implement ElasticSearch 
+    ☐ Add Search capability in to Website
+    ☐ ?

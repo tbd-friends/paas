@@ -11,5 +11,9 @@ namespace mongo.repository
     {
         Task Add<T>(T entity, string collectionName);
         Task<IEnumerable<TDocument>> Query<TDocument>(string collectionName, Expression<Func<TDocument, bool>> query);
+
+        Task Replace<T>(T replacement,
+            Expression<Func<T, bool>> find,
+            string collectionName);
     }
 }
