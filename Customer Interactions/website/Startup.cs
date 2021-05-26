@@ -1,3 +1,4 @@
+using System;
 using Gamer.Customer.Website.Consumers;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using mongo.repository;
 using MongoDB.Driver;
+using Nest;
 
 namespace Gamer.Customer.Website
 {
@@ -30,6 +32,8 @@ namespace Gamer.Customer.Website
                 new MongoClient(Configuration.GetConnectionString("mongo-db")));
             services.AddScoped<IRepository, MongoRepository>(p => 
                 new MongoRepository(p.GetService<IMongoClient>(), "website"));
+            services.AddSingleton<IElasticClient>(_ =>
+                new ElasticClient(new Uri("http://localhost:9200")));
 
             services.AddMassTransit(x =>
             {

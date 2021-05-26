@@ -18,10 +18,12 @@ namespace kafka.consumers.Infrastructure
                 Categories = from c in menu.Categories
                              select new StorageCategory
                              {
+                                 Id = c.Id,
                                  Name = c.Name,
                                  Items = from i in c.Items
                                          select new StorageItem
                                          {
+                                             Id = i.Id,
                                              Name = i.Name,
                                              Description = i.Description,
                                              Price = i.Price

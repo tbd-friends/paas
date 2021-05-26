@@ -57,7 +57,10 @@ namespace kafka.consumers
                                     {
                                         Id = i.Id,
                                         Name = i.Name,
-                                        Description = i.Description
+                                        Description = i.Description,
+                                        MenuId = result.Message.Value.Id,
+                                        CategoryId = c.Id,
+                                        CategoryName = c.Name
                                     };
 
                         foreach (var item in items)
@@ -76,6 +79,9 @@ namespace kafka.consumers
 
     public class SearchMenuItem
     {
+        public Guid MenuId { get; set; }
+        public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

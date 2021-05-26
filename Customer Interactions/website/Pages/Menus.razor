@@ -2,8 +2,15 @@
 
 @using mongo.repository
 @using interactions.models
+@using Nest
 
 <h3>Menu</h3>
+
+<div>
+    <input type="text" placeholder="Search..." @bind="SearchText" />
+    <button @onclick="DoSearch">Search</button>
+</div>
+
 
 @foreach (var menu in Current)
 {
@@ -14,10 +21,59 @@
     [Inject]
     public IRepository Repository { get; set; }
 
+    [Inject]
+    public IElasticClient ElasticClient { get; set; }
+
+    public string SearchText { get; set; }
+
     public IEnumerable<Menu> Current { get; set; } = new List<Menu>();
 
     protected override async Task OnInitializedAsync()
     {
-        Current = await Repository.Query<Menu>("menus", q => !string.IsNullOrEmpty(q.Name));
+        Current = (await Repository
+            .Query<Menu>("menus", q => !string.IsNullOrEmpty(q.Name))).ToList();
+    }
+
+    protected void DoSearch()
+    {
+        var results = ElasticClient.Search<SearchMenuItem>(s => s
+            .Size(100)
+            .Index("menu-items")
+            .Query(q => q
+                .Bool(bq => bq
+                    .Must(m => m
+                        .QueryString(qsd =>
+                            qsd.Query(SearchText))))));
+
+        Current = results.Documents.GroupBy(g => g.MenuId)
+            .Select(m => new Menu()
+            {
+                SourceMenuId = m.Key,
+                Categories = m.GroupBy(x => x.CategoryId)
+                    .Select(c => new Category
+                    {
+                        Id = c.Key,
+                        Name = c.First().CategoryName,
+                        Items = from i in c
+                                select new Item
+                                {
+                                    Id = i.Id,
+                                    Name = i.Name,
+                                    Description = i.Description
+                                }
+                    })
+            });
+
+    }
+
+
+    public class SearchMenuItem
+    {
+        public Guid MenuId { get; set; }
+        public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }
