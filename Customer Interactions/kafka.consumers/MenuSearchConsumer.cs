@@ -60,7 +60,8 @@ namespace kafka.consumers
                                         Description = i.Description,
                                         MenuId = result.Message.Value.Id,
                                         CategoryId = c.Id,
-                                        CategoryName = c.Name
+                                        CategoryName = c.Name,
+                                        Price = i.Price
                                     };
 
                         foreach (var item in items)
@@ -85,5 +86,6 @@ namespace kafka.consumers
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public double Price { get; set; }
     }
 }

@@ -30,8 +30,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Current = (await Repository
-            .Query<Menu>("menus", q => !string.IsNullOrEmpty(q.Name))).ToList();
+        var results = await ElasticClient.SearchAsync<SearchMenuItem>(s => s
+            .Index("menu-items"));
+
+        Current = TransformSearchToMenu(results);
+
+        @*(await Repository
+            .Query<Menu>("menus", q => !string.IsNullOrEmpty(q.Name))).ToList();*@
     }
 
     protected void DoSearch()
@@ -45,7 +50,13 @@
                         .QueryString(qsd =>
                             qsd.Query(SearchText))))));
 
-        Current = results.Documents.GroupBy(g => g.MenuId)
+        Current = TransformSearchToMenu(results);
+
+    }
+
+    private static IEnumerable<Menu> TransformSearchToMenu(ISearchResponse<SearchMenuItem> results)
+    {
+        return results.Documents.GroupBy(g => g.MenuId)
             .Select(m => new Menu()
             {
                 SourceMenuId = m.Key,
@@ -59,11 +70,11 @@
                                 {
                                     Id = i.Id,
                                     Name = i.Name,
-                                    Description = i.Description
+                                    Description = i.Description,
+                                    Price = i.Price
                                 }
                     })
             });
-
     }
 
 
@@ -75,5 +86,6 @@
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public double Price { get; set; }
     }
 }
