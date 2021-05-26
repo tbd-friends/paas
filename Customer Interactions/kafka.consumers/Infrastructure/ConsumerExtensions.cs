@@ -9,7 +9,7 @@ namespace kafka.consumers.Infrastructure
 {
     public static class ConsumerExtensions
     {
-        public static StorageMenu AsStorage(this Menu menu)
+        public static StorageMenu TransformToStorageModel(this Menu menu)
         {
             return new StorageMenu
             {

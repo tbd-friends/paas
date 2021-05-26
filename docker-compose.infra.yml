@@ -25,7 +25,7 @@ services:
         ]
 
     zookeeper:
-        image: confluentinc/cp-zookeeper:5.5.1
+        image: confluentinc/cp-zookeeper:latest
         hostname: zookeeper
         container_name: zookeeper
         ports:
@@ -35,7 +35,7 @@ services:
             ZOOKEEPER_TICK_TIME: 2000
 
     broker:
-        image: confluentinc/cp-kafka:5.5.1
+        image: confluentinc/cp-kafka:latest
         hostname: broker
         container_name: broker
         depends_on:
@@ -64,3 +64,24 @@ services:
         environment:
             ZK_HOSTS: "zookeeper:2181"
             APPLICATION_SECRET: "random-secret"
+
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+        container_name: interactions.elasticsearch
+        ports:
+            - 9200:9200
+        environment:
+            - cluster.name:interactions-menu
+            - network.host=0.0.0.0
+            - bootstrap.memory_lock=true
+            - discovery.type=single-node
+
+    kibana:
+        container_name: kibana
+        image: docker.elastic.co/kibana/kibana:7.12.1
+        environment:
+            - ELASTICSEARCH_HOSTS=http://interactions.elasticsearch:9200
+        ports:
+            - 5601:5601
+        depends_on:
+            - elasticsearch

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,28 +10,28 @@ using kafka.consumers.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using mongo.repository;
-using StorageMenu = interactions.models.Menu;
+using Nest;
 
 namespace kafka.consumers
 {
-    public class MenuConsumer : BackgroundService
+    public class MenuSearchConsumer : BackgroundService
     {
-        private readonly IRepository _repository;
+        private readonly IElasticClient _client;
         private readonly IDictionary<string, string> _kafkaConfiguration;
-        private readonly IServiceScope _scope;
+        private IServiceScope _scope;
 
-        public MenuConsumer(IServiceProvider provider, IConfiguration configuration)
+        public MenuSearchConsumer(IServiceProvider provider, IConfiguration configuration)
         {
             _scope = provider.CreateScope();
 
-            _repository = _scope.ServiceProvider.GetService<IRepository>();
-
+            _client = _scope.ServiceProvider.GetService<IElasticClient>();
             _kafkaConfiguration = new Dictionary<string, string>();
 
             configuration
                 .GetSection("kafka:consumer")
                 .Bind(_kafkaConfiguration);
+
+            _kafkaConfiguration["group.id"] = $"{_kafkaConfiguration["group.id"]}.search";
         }
 
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
@@ -51,21 +51,20 @@ namespace kafka.consumers
 
                     if (result != null)
                     {
-                        var existing =
-                            (await _repository.Query<StorageMenu>("menus", m => m.SourceMenuId == result.Message.Key)
-                            ).SingleOrDefault();
+                        var items = from c in result.Message.Value.Categories
+                                    from i in c.Items
+                                    select new SearchMenuItem
+                                    {
+                                        Id = i.Id,
+                                        Name = i.Name,
+                                        Description = i.Description
+                                    };
 
-                        if (existing != null)
+                        foreach (var item in items)
                         {
-                            var replacement = result.Message.Value.TransformToStorageModel();
-
-                            replacement.Id = existing.Id;
-
-                            await _repository.Replace(replacement, m => m.SourceMenuId == result.Message.Key, "menus");
-                        }
-                        else
-                        {
-                            await _repository.Add(result.Message.Value.TransformToStorageModel(), "menus");
+                            await _client.IndexAsync(
+                                new IndexRequest<SearchMenuItem>("menu-items", item.Id)
+                                { Document = item }, cancellationToken);
                         }
 
                         consumer.Commit(result);
@@ -75,4 +74,10 @@ namespace kafka.consumers
         }
     }
 
+    public class SearchMenuItem
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+    }
 }

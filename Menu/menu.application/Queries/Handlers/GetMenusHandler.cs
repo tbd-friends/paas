@@ -26,23 +26,23 @@ namespace Gamer.Menu.Application.Queries.Handlers
                         {
                             Uid = m.UID,
                             Name = m.Name,
-                            Categories = from mc in _context.MenuCategories
+                            Categories = (from mc in _context.MenuCategories
                                          join c in _context.Categories on mc.CategoryId equals c.Id
                                          where mc.MenuId == m.Id
                                          select new MenuCategoryViewModel
                                          {
                                              Uid = c.UID,
                                              Name = c.Name,
-                                             Items = from mi in _context.MenuCategoryItems
-                                                     join i in _context.Items on mi.ItemId equals i.Id
-                                                     select new MenuItemViewModel
-                                                     {
-                                                         Uid = i.UID,
-                                                         Name = i.Name,
-                                                         Description = i.Description,
-                                                         Price = i.Price
-                                                     }
-                                         }
+                                             Items = (from mi in _context.MenuCategoryItems
+                                                      join i in _context.Items on mi.ItemId equals i.Id
+                                                      select new MenuItemViewModel
+                                                      {
+                                                          Uid = i.UID,
+                                                          Name = i.Name,
+                                                          Description = i.Description,
+                                                          Price = i.Price
+                                                      }).ToList()
+                                         }).ToList()
                         };
 
             return Task.FromResult(menus.AsEnumerable());
